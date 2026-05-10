@@ -10,8 +10,12 @@ export class SuperTokensAuthGuard implements CanActivate {
       const session = await getSession(req, res, { sessionRequired: true });
       req.session = session;
       return true;
-    } catch (err) {
-      throw new UnauthorizedException('No active SuperTokens session');
+    } catch (err: any) {
+      const detail = err?.type || err?.message || 'unknown';
+      const cookieNames = Object.keys(req.cookies || {});
+      throw new UnauthorizedException(
+        `No active SuperTokens session (reason=${detail}, cookies=[${cookieNames.join(',')}])`,
+      );
     }
   }
 }

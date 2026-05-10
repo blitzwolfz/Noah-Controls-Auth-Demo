@@ -1,12 +1,14 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import supertokens from 'supertokens-node';
 import { SuperTokensExceptionFilter } from './supertokens/supertokens.filter';
+import { ensureBetterAuthSchema } from './better-auth/better-auth.instance';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+  await ensureBetterAuthSchema();
+
   const app = await NestFactory.create(AppModule, { bodyParser: true });
 
   const frontendOrigin = process.env.FRONTEND_ORIGIN || 'http://localhost:5173';
@@ -18,7 +20,6 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalFilters(new SuperTokensExceptionFilter());
 
   const port = Number(process.env.PORT || 4000);

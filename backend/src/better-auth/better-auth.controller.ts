@@ -20,10 +20,14 @@ function toWebRequest(req: Request): globalThis.Request {
   return new Request(url, init);
 }
 
+const SKIP_HEADERS = new Set(['content-length', 'content-encoding', 'transfer-encoding', 'connection']);
+
 async function sendWebResponse(webRes: globalThis.Response, res: Response) {
   res.status(webRes.status);
   webRes.headers.forEach((value, key) => {
-    if (key.toLowerCase() === 'set-cookie') {
+    const lower = key.toLowerCase();
+    if (SKIP_HEADERS.has(lower)) return;
+    if (lower === 'set-cookie') {
       res.append('set-cookie', value);
     } else {
       res.setHeader(key, value);

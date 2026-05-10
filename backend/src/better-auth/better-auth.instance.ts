@@ -1,4 +1,5 @@
 import { betterAuth } from 'better-auth';
+import { getMigrations } from 'better-auth/db';
 import Database from 'better-sqlite3';
 import { mkdirSync } from 'fs';
 import { dirname, resolve } from 'path';
@@ -21,3 +22,8 @@ export const auth = betterAuth({
     defaultCookieAttributes: { sameSite: 'lax', secure: false },
   },
 });
+
+export async function ensureBetterAuthSchema() {
+  const { runMigrations } = await getMigrations(auth.options);
+  await runMigrations();
+}

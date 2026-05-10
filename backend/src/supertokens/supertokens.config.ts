@@ -15,10 +15,17 @@ export function initSuperTokens() {
       appName: 'Noah Controls Auth Demo',
       apiDomain: process.env.SUPERTOKENS_API_BASE || 'http://localhost:4000',
       websiteDomain: process.env.SUPERTOKENS_WEBSITE_BASE || 'http://localhost:5173',
-      apiBasePath: '/api/supertokens/auth',
+      apiBasePath: '/api/supertokens',
       websiteBasePath: '/supertokens',
     },
-    recipeList: [EmailPassword.init(), Session.init()],
+    recipeList: [
+      EmailPassword.init(),
+      Session.init({
+        cookieSameSite: 'lax',
+        cookieSecure: false,
+        getTokenTransferMethod: () => 'cookie',
+      }),
+    ],
   });
   initialized = true;
 }

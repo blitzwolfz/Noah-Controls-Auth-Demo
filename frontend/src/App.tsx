@@ -6,23 +6,28 @@ import BetterAuthDemo from './pages/BetterAuthDemo';
 
 export default function App() {
   return (
-    <div className="app-shell">
+    <div className="shell">
       <header className="header">
-        <div className="brand">
-          <div className="brand-mark">N</div>
-          <div>
-            <div className="brand-name">Noah Controls</div>
-            <div className="brand-sub">Auth Provider Demo</div>
+        <div className="header-inner">
+          <div className="brand">
+            <div className="brand-mark" aria-hidden />
+            <div className="brand-text">
+              Noah Controls
+              <small>Auth / Study 001</small>
+            </div>
+          </div>
+          <nav className="nav">
+            <NavLink to="/" end>00 / Overview</NavLink>
+            <NavLink to="/keycloak">01 / Keycloak</NavLink>
+            <NavLink to="/supertokens">02 / SuperTokens</NavLink>
+            <NavLink to="/better-auth">03 / Better Auth</NavLink>
+          </nav>
+          <div className="header-meta">
+            Build &middot; v0.1 &middot; Local
           </div>
         </div>
-        <nav className="nav">
-          <NavLink to="/" end>Overview</NavLink>
-          <NavLink to="/keycloak">Keycloak</NavLink>
-          <NavLink to="/supertokens">SuperTokens</NavLink>
-          <NavLink to="/better-auth">Better Auth</NavLink>
-        </nav>
       </header>
-      <main className="main">
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/keycloak" element={<KeycloakDemo />} />
@@ -31,7 +36,16 @@ export default function App() {
         </Routes>
       </main>
       <footer className="footer">
-        Built for Noah Controls. Local development demo only.
+        <div className="footer-inner">
+          <div className="footer-brand">
+            Noah Controls<br />Auth Study
+          </div>
+          <div className="footer-meta">
+            <span>Self-hosted comparison rig</span>
+            <span>Drafted for internal review</span>
+            <span>v0.1.0 / 2026</span>
+          </div>
+        </div>
       </footer>
     </div>
   );

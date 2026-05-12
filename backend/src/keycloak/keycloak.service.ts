@@ -33,6 +33,10 @@ export class KeycloakService {
     return `${this.baseUrl}/realms/${this.realm}`;
   }
 
+  accountConsoleUrl() {
+    return `${this.realmUrl}/account/`;
+  }
+
   async login(username: string, password: string): Promise<KeycloakTokenResponse> {
     const body = new URLSearchParams({
       grant_type: 'password',

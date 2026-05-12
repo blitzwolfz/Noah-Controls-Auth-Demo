@@ -6,82 +6,90 @@ type Cell = { tone: 'yes' | 'no' | 'partial'; label: string; note?: string };
 
 const rows: { capability: string; cells: [Cell, Cell, Cell] }[] = [
   {
-    capability: 'Runs as',
+    capability: 'How it runs',
     cells: [
-      { tone: 'yes', label: 'Service', note: 'Java / Quarkus' },
-      { tone: 'yes', label: 'Service', note: 'Node core' },
-      { tone: 'yes', label: 'Library', note: 'In your app' },
+      { tone: 'yes', label: 'Separate server', note: 'Java / Quarkus' },
+      { tone: 'yes', label: 'Separate server', note: 'Plus Node SDK' },
+      { tone: 'yes', label: 'Library', note: 'Inside your app' },
     ],
   },
   {
     capability: 'Admin console',
     cells: [
-      { tone: 'yes', label: 'Yes', note: 'Realms, clients, roles' },
-      { tone: 'yes', label: 'Yes', note: 'Dashboard for users' },
-      { tone: 'no', label: 'None', note: 'Roll your own' },
+      { tone: 'yes', label: 'Yes', note: 'Realms, users, roles' },
+      { tone: 'yes', label: 'Yes', note: 'User dashboard' },
+      { tone: 'no', label: 'No', note: 'You build it' },
     ],
   },
   {
-    capability: 'SAML 2.0 / OIDC IdP',
+    capability: 'SAML support',
     cells: [
-      { tone: 'yes', label: 'Yes', note: 'Full broker' },
-      { tone: 'partial', label: 'OIDC only' },
-      { tone: 'no', label: 'No' },
-    ],
-  },
-  {
-    capability: 'LDAP / AD federation',
-    cells: [
-      { tone: 'yes', label: 'Yes', note: 'User federation' },
+      { tone: 'yes', label: 'Yes', note: 'Full provider' },
       { tone: 'no', label: 'No' },
       { tone: 'no', label: 'No' },
     ],
   },
   {
-    capability: 'Session theft detection',
+    capability: 'OIDC support',
     cells: [
-      { tone: 'partial', label: 'Manual' },
-      { tone: 'yes', label: 'Built in', note: 'Rotating refresh' },
+      { tone: 'yes', label: 'Yes' },
+      { tone: 'yes', label: 'Yes' },
+      { tone: 'partial', label: 'Plugin' },
+    ],
+  },
+  {
+    capability: 'LDAP / Active Directory',
+    cells: [
+      { tone: 'yes', label: 'Yes', note: 'Federated' },
+      { tone: 'no', label: 'No' },
+      { tone: 'no', label: 'No' },
+    ],
+  },
+  {
+    capability: 'Session hijack detection',
+    cells: [
+      { tone: 'partial', label: 'Manual setup' },
+      { tone: 'yes', label: 'Built in', note: 'Refresh rotation' },
       { tone: 'partial', label: 'Per session' },
     ],
   },
   {
-    capability: 'Passwordless / magic link',
+    capability: 'Magic link login',
     cells: [
       { tone: 'partial', label: 'Plugin' },
-      { tone: 'yes', label: 'Recipe' },
+      { tone: 'yes', label: 'Built in' },
       { tone: 'yes', label: 'Plugin' },
     ],
   },
   {
-    capability: 'Passkeys / WebAuthn',
+    capability: 'Passkeys',
     cells: [
-      { tone: 'yes', label: 'Yes', note: 'Native' },
-      { tone: 'yes', label: 'Yes' },
+      { tone: 'yes', label: 'Built in' },
+      { tone: 'yes', label: 'Built in' },
       { tone: 'yes', label: 'Plugin' },
     ],
   },
   {
     capability: 'Two-factor (TOTP)',
     cells: [
-      { tone: 'yes', label: 'Yes' },
-      { tone: 'yes', label: 'Recipe' },
+      { tone: 'yes', label: 'Built in' },
+      { tone: 'yes', label: 'Built in' },
       { tone: 'yes', label: 'Plugin' },
     ],
   },
   {
-    capability: 'Organizations / multi-tenant',
+    capability: 'Organizations',
     cells: [
-      { tone: 'yes', label: 'Realms', note: 'Hard separation' },
-      { tone: 'partial', label: 'Tenants', note: 'Add-on' },
-      { tone: 'yes', label: 'Plugin', note: 'In-app model' },
+      { tone: 'yes', label: 'Realms', note: 'Strong isolation' },
+      { tone: 'partial', label: 'Tenants' },
+      { tone: 'yes', label: 'Plugin' },
     ],
   },
   {
-    capability: 'Role / permission model',
+    capability: 'Roles and permissions',
     cells: [
-      { tone: 'yes', label: 'Deep', note: 'UMA 2.0' },
-      { tone: 'partial', label: 'Roles' },
+      { tone: 'yes', label: 'Deep', note: 'UMA, scopes' },
+      { tone: 'partial', label: 'Roles only' },
       { tone: 'partial', label: 'Roles plugin' },
     ],
   },
@@ -90,15 +98,7 @@ const rows: { capability: string; cells: [Cell, Cell, Cell] }[] = [
     cells: [
       { tone: 'yes', label: 'Built in' },
       { tone: 'partial', label: 'Events' },
-      { tone: 'no', label: 'DIY' },
-    ],
-  },
-  {
-    capability: 'Email templates',
-    cells: [
-      { tone: 'yes', label: 'Themed' },
-      { tone: 'yes', label: 'Hookable' },
-      { tone: 'yes', label: 'Send hook' },
+      { tone: 'no', label: 'You build it' },
     ],
   },
   {
@@ -112,23 +112,23 @@ const rows: { capability: string; cells: [Cell, Cell, Cell] }[] = [
   {
     capability: 'Mobile SDKs',
     cells: [
-      { tone: 'yes', label: 'iOS / Android' },
-      { tone: 'yes', label: 'iOS / Android / RN' },
+      { tone: 'yes', label: 'iOS, Android' },
+      { tone: 'yes', label: 'iOS, Android, RN' },
       { tone: 'partial', label: 'Via REST' },
     ],
   },
   {
-    capability: 'Type-safe client',
+    capability: 'Typed client',
     cells: [
-      { tone: 'no', label: 'No', note: 'Generated specs' },
+      { tone: 'no', label: 'No', note: 'OpenAPI specs only' },
       { tone: 'partial', label: 'Typed SDK' },
-      { tone: 'yes', label: 'End to end' },
+      { tone: 'yes', label: 'Full', note: 'Server to client' },
     ],
   },
   {
-    capability: 'Hosted option',
+    capability: 'Hosted version available',
     cells: [
-      { tone: 'partial', label: 'Cloudiam, Phase Two' },
+      { tone: 'partial', label: 'Third party' },
       { tone: 'yes', label: 'SuperTokens Cloud' },
       { tone: 'no', label: 'Self-host only' },
     ],
@@ -142,19 +142,19 @@ const rows: { capability: string; cells: [Cell, Cell, Cell] }[] = [
     ],
   },
   {
-    capability: 'Operational weight',
+    capability: 'Resource footprint',
     cells: [
       { tone: 'no', label: 'Heavy', note: 'JVM, Postgres' },
-      { tone: 'partial', label: 'Medium', note: 'Core service' },
+      { tone: 'partial', label: 'Medium' },
       { tone: 'yes', label: 'Light', note: 'No extra service' },
     ],
   },
   {
-    capability: 'Time to first login',
+    capability: 'Setup time',
     cells: [
-      { tone: 'no', label: '1 to 2 days', note: 'Realm setup' },
-      { tone: 'partial', label: 'Half day' },
-      { tone: 'yes', label: 'Under 1 hr' },
+      { tone: 'no', label: '1 to 2 days' },
+      { tone: 'partial', label: 'Half a day' },
+      { tone: 'yes', label: 'Under an hour' },
     ],
   },
 ];
@@ -180,43 +180,43 @@ type Scenario = {
 const scenarios: Scenario[] = [
   {
     num: '01',
-    ifText: 'If the next contract asks for SAML',
-    body: 'A procurement-led customer wants their AD users mirrored into your app, with SCIM provisioning and a SAML SSO assertion.',
+    ifText: 'A customer asks for SAML',
+    body: 'They want their corporate Active Directory users in your app, with SCIM provisioning and a SAML SSO assertion from their side.',
     pick: 'Keycloak',
     pickId: 'keycloak',
   },
   {
     num: '02',
-    ifText: 'If users live in the app for hours on mobile',
-    body: 'Long-lived mobile sessions with rotating refresh tokens and detection of stolen credentials matter more than any other feature.',
+    ifText: 'Users stay logged in on mobile for weeks',
+    body: 'Long mobile sessions where refresh token rotation and detection of stolen credentials are important.',
     pick: 'SuperTokens',
     pickId: 'supertokens',
   },
   {
     num: '03',
-    ifText: 'If the team is two engineers shipping a product',
-    body: 'You want one deploy, one database, typed calls, and zero hours spent operating a second auth service.',
+    ifText: 'The team is two engineers shipping a product',
+    body: 'You want one deploy, one database, and typed calls. No time to run a second service.',
     pick: 'Better Auth',
     pickId: 'better-auth',
   },
   {
     num: '04',
-    ifText: 'If you sell into regulated industries',
-    body: 'Audit logs, fine-grained authorization, a hardened admin console, and a track record of penetration testing are non-negotiable.',
+    ifText: 'You sell into regulated industries',
+    body: 'Audit logs, fine-grained permissions, and a hardened admin console are required, not optional.',
     pick: 'Keycloak',
     pickId: 'keycloak',
   },
   {
     num: '05',
-    ifText: 'If passwordless and MFA are on the next milestone',
-    body: 'Magic link, TOTP, and recovery codes need to ship without weeks of integration work or pulling in a stack of side libraries.',
+    ifText: 'Passwordless and MFA are on the roadmap',
+    body: 'Magic link, TOTP, and recovery codes need to ship soon without stitching together side libraries.',
     pick: 'SuperTokens',
     pickId: 'supertokens',
   },
   {
     num: '06',
-    ifText: 'If the auth schema needs to share migrations with your data',
-    body: 'You already run Prisma or Drizzle. You want users in the same migration history as orders and devices, not in a separate database.',
+    ifText: 'Auth tables need to live with the rest of your data',
+    body: 'You already use Prisma or Drizzle. Users belong in the same migration history as orders and devices.',
     pick: 'Better Auth',
     pickId: 'better-auth',
   },
@@ -234,17 +234,20 @@ export default function Home() {
         <div className="hero-grid">
           <h1 className="hero-title">
             Three<br />
-            <em>Doors</em><br />
-            <span className="stroke">Into the</span><br />
-            Same Room.
+            <em>Auth</em><br />
+            <span className="stroke">Providers,</span><br />
+            One Demo.
           </h1>
           <div className="hero-lede">
             <p>
-              Noah Controls is choosing how customers sign in. This rig runs
-              the three serious self-hostable options side by side, on a single
-              backend, so the trade-offs read in minutes rather than weeks.
+              This site compares Keycloak, SuperTokens, and Better Auth. You
+              can sign in with each one and see how it works. The matrix below
+              covers nineteen features.
             </p>
-            <p>Keycloak. SuperTokens. Better Auth. One demo each, plus a recommendation.</p>
+            <p>
+              The recommendation at the bottom is what we would build with
+              today for Noah Controls.
+            </p>
           </div>
           <div className="hero-meta">
             <div>Providers<b>03</b></div>
@@ -256,46 +259,46 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="00" label="The three providers, fast" />
+        <Marker num="00" label="The three providers" />
         <div className="trio">
           <article className="trio-card" data-accent="orange">
             <div className="trio-mark"><KeycloakMark size={56} /></div>
-            <div className="trio-index">01 / Service</div>
+            <div className="trio-index">01 / Server</div>
             <h2 className="trio-name">Keycloak</h2>
-            <div className="trio-tag">Enterprise IAM</div>
+            <div className="trio-tag">Self-hosted auth server</div>
             <p className="trio-body">
-              The biggest, oldest, most opinionated box of the three. Brings a
-              full admin console, federation, and protocol breadth that the
-              other two will not match.
+              A separate server you run alongside your app. Users sign in by
+              going to Keycloak, which sends a token back. Used by companies
+              that need SAML, OIDC, and Active Directory in one place.
             </p>
             <ul className="trio-list">
-              <li>SAML, OIDC, LDAP, Kerberos</li>
-              <li>Realms model fits franchise tenancy</li>
-              <li>Heavyweight JVM, slower to operate</li>
+              <li>Supports SAML, OIDC, and LDAP</li>
+              <li>Admin console for users and roles</li>
+              <li>Runs on Java, needs about 1 GB of RAM</li>
             </ul>
             <Link to="/keycloak" className="trio-cta">
-              <span>Open the study</span>
+              <span>Open the demo</span>
               <span>&rarr;</span>
             </Link>
           </article>
 
           <article className="trio-card" data-accent="cobalt">
             <div className="trio-mark"><SuperTokensMark size={56} /></div>
-            <div className="trio-index">02 / Service</div>
+            <div className="trio-index">02 / Server + SDK</div>
             <h2 className="trio-name">SuperTokens</h2>
-            <div className="trio-tag">Sessions, done right</div>
+            <div className="trio-tag">Auth server plus Node SDK</div>
             <p className="trio-body">
-              A focused auth core built around rotating sessions and a recipe
-              system. Lighter than Keycloak, more battle-tested than Better
-              Auth, with detection baked in.
+              A small server that stores users, paired with a Node SDK that
+              handles signup, login, and session cookies. The session cookie
+              rotates on every refresh.
             </p>
             <ul className="trio-list">
-              <li>Rotating refresh, theft detection</li>
-              <li>Recipes for password, passwordless, social</li>
-              <li>Self-host or managed cloud</li>
+              <li>Refresh token rotation, hijack detection</li>
+              <li>Email password, magic link, social, MFA</li>
+              <li>Self-host or use SuperTokens Cloud</li>
             </ul>
             <Link to="/supertokens" className="trio-cta">
-              <span>Open the study</span>
+              <span>Open the demo</span>
               <span>&rarr;</span>
             </Link>
           </article>
@@ -304,19 +307,19 @@ export default function Home() {
             <div className="trio-mark"><BetterAuthMark size={56} /></div>
             <div className="trio-index">03 / Library</div>
             <h2 className="trio-name">Better Auth</h2>
-            <div className="trio-tag">Lives in your code</div>
+            <div className="trio-tag">TypeScript library</div>
             <p className="trio-body">
-              No second process. Auth is an npm dependency that owns a couple
-              of tables in your database. The TypeScript story is the most
-              honest of the three.
+              No separate server. You install it into your app and it adds a
+              few tables to your database. Calls between server and client are
+              typed end to end.
             </p>
             <ul className="trio-list">
               <li>Plugins for orgs, 2FA, passkeys, magic link</li>
-              <li>SQLite, Postgres, MySQL via Kysely</li>
-              <li>You operate the surface area</li>
+              <li>Works with SQLite, Postgres, MySQL</li>
+              <li>You operate the auth code yourself</li>
             </ul>
             <Link to="/better-auth" className="trio-cta">
-              <span>Open the study</span>
+              <span>Open the demo</span>
               <span>&rarr;</span>
             </Link>
           </article>
@@ -324,16 +327,16 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="01" label="What each one actually does" />
+        <Marker num="01" label="What each one supports" />
         <h2 className="section-head">
-          <small>The matrix</small>
-          Nineteen rows, three columns, no marketing.
+          <small>Feature matrix</small>
+          Nineteen features, three providers.
         </h2>
         <div className="matrix-wrap">
           <table className="matrix">
             <thead>
               <tr>
-                <th>Capability</th>
+                <th>Feature</th>
                 <th>Keycloak</th>
                 <th>SuperTokens</th>
                 <th>Better Auth</th>
@@ -354,10 +357,10 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="02" label="Reasoning, scenario by scenario" />
+        <Marker num="02" label="Which one to pick, by scenario" />
         <h2 className="section-head">
           <small>If / then</small>
-          The shape of the work picks the tool.
+          Six common situations and the right pick for each.
         </h2>
         <div className="scenarios">
           {scenarios.map((s) => (
@@ -371,7 +374,7 @@ export default function Home() {
               </p>
               <div />
               <div className="scenario-pick">
-                <span className="scenario-arrow">Lead with</span>
+                <span className="scenario-arrow">Use</span>
                 <span className="scenario-winner" data-id={s.pickId}>{s.pick}</span>
               </div>
             </div>
@@ -380,11 +383,11 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="03" label="Our recommendation for Noah Controls" />
+        <Marker num="03" label="Our recommendation" />
         <div className="recommendation">
-          <div className="rec-eyebrow">From the integration team / Noah Controls auth study</div>
+          <div className="rec-eyebrow">From the integration team</div>
           <h2 className="rec-headline">
-            Ship on <em>Better Auth</em>. Keep Keycloak as the escape hatch.
+            Use <em>Better Auth</em>. Keep Keycloak ready for enterprise customers.
           </h2>
           <div className="rec-pick">
             <div className="rec-pick-tag">The pick</div>
@@ -395,28 +398,28 @@ export default function Home() {
             <div className="rec-col">
               <h4>Why it fits Noah Controls</h4>
               <ul>
-                <li>One deploy, one database, one migration history</li>
-                <li>Typed signin and session calls, no hand-written fetch</li>
-                <li>Plugins land what you actually need: orgs, 2FA, magic link</li>
-                <li>Auth schema lives next to the rest of your data</li>
+                <li>One database, one deploy, one migration history</li>
+                <li>Typed sign in and session calls, no hand-written fetches</li>
+                <li>Plugins add organizations, 2FA, and magic link when needed</li>
+                <li>Auth tables live next to the rest of your data</li>
               </ul>
             </div>
             <div className="rec-col">
               <h4>Where it costs you</h4>
               <ul>
-                <li>No admin console, build a thin user list yourself</li>
+                <li>No admin console, you build user management</li>
                 <li>No SAML, no LDAP federation</li>
-                <li>Youngest of the three, expect a breaking minor</li>
-                <li>You own the security boundary in your repo</li>
+                <li>Newer project, occasional breaking changes in minors</li>
+                <li>You own the security of the integration</li>
               </ul>
             </div>
             <div className="rec-col">
-              <h4>What we'd hold in reserve</h4>
+              <h4>What we hold in reserve</h4>
               <ul>
-                <li>Keycloak for the first SAML-led enterprise deal</li>
-                <li>SuperTokens if mobile session theft becomes the threat</li>
-                <li>Both wrap behind the same provider abstraction</li>
-                <li>Migration story: export users, replay password resets</li>
+                <li>Keycloak for the first SAML customer</li>
+                <li>SuperTokens if mobile sessions become a problem</li>
+                <li>Both can be added later behind a feature flag</li>
+                <li>User export is documented for both</li>
               </ul>
             </div>
           </div>
@@ -424,34 +427,34 @@ export default function Home() {
           <div className="rec-plan">
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">Week 01</div>
-              <div className="rec-plan-title">Drop in Better Auth</div>
+              <div className="rec-plan-title">Install Better Auth</div>
               <p className="rec-plan-body">
-                Email + password, session cookie, profile route. Run against
-                Postgres. Migrate the existing demo users.
+                Email and password signup, login, session cookies. Run against
+                your existing Postgres. Migrate the current users.
               </p>
             </div>
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">Week 02</div>
-              <div className="rec-plan-title">Wire the plugins</div>
+              <div className="rec-plan-title">Add plugins</div>
               <p className="rec-plan-body">
                 Organizations plugin for multi-tenant. Magic link for password
-                recovery. TOTP plugin behind a feature flag for opt-in 2FA.
+                resets. TOTP behind a setting for users who want 2FA.
               </p>
             </div>
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">Week 03</div>
-              <div className="rec-plan-title">Build the thin admin</div>
+              <div className="rec-plan-title">Build user admin</div>
               <p className="rec-plan-body">
-                A user list, a force-logout button, an audit log table fed by
-                Better Auth hooks. The bits the library does not ship.
+                A user list page, a force-logout button, an audit log fed by
+                Better Auth hooks. The pieces the library does not ship.
               </p>
             </div>
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">Trigger</div>
-              <div className="rec-plan-title">When to switch to Keycloak</div>
+              <div className="rec-plan-title">When to add Keycloak</div>
               <p className="rec-plan-body">
-                A signed contract that requires SAML, SCIM, or AD federation.
-                Stand up Keycloak alongside, broker through it for that tenant.
+                A signed deal that needs SAML, SCIM, or AD federation. Run
+                Keycloak alongside, route that customer through it.
               </p>
             </div>
           </div>
@@ -459,9 +462,9 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="04" label="Escape clauses, written down" />
+        <Marker num="04" label="What would change the recommendation" />
         <h2 className="section-head">
-          <small>What changes the call</small>
+          <small>Escape clauses</small>
           Three signals that flip the pick.
         </h2>
         <div className="escape">
@@ -469,63 +472,64 @@ export default function Home() {
             <div className="escape-tag">Signal / SAML</div>
             <h3 className="escape-title">A buyer asks for SAML before product-market fit.</h3>
             <p>
-              Skip Better Auth. Start on Keycloak now. The cost of swapping
-              IdPs later, after customer assertions are live, is meaningful.
+              Do not start with Better Auth. Use Keycloak from day one. Moving
+              customers off an identity provider after they integrate with it
+              is expensive.
             </p>
           </div>
           <div className="escape-cell">
             <div className="escape-tag">Signal / Mobile</div>
-            <h3 className="escape-title">The product becomes mostly a mobile app.</h3>
+            <h3 className="escape-title">The product becomes mainly a mobile app.</h3>
             <p>
-              SuperTokens earns its keep with refresh rotation and theft
-              detection across long-lived mobile sessions. Move before the
-              first incident, not after.
+              SuperTokens is worth the extra service. Long mobile sessions are
+              where session hijacking actually happens. Move before the first
+              incident, not after.
             </p>
           </div>
           <div className="escape-cell">
             <div className="escape-tag">Signal / Scale</div>
             <h3 className="escape-title">Auth becomes its own product surface.</h3>
             <p>
-              If the team grows past a dozen engineers and auth needs an owner,
-              a dedicated service stops being overhead and starts being
-              structure. Keycloak or SuperTokens both qualify.
+              If the team passes a dozen engineers and auth has a full-time
+              owner, a separate auth service stops being overhead. Keycloak or
+              SuperTokens both fit.
             </p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <Marker num="05" label="When to pick what" />
+        <Marker num="05" label="Short version" />
         <h2 className="section-head">
-          <small>Decision sketch</small>
-          Three honest defaults.
+          <small>Quick reference</small>
+          Pick by team shape and customer type.
         </h2>
         <div className="guidance">
           <div className="guidance-cell" data-accent="orange">
-            <span className="guidance-tag">Pick Keycloak when</span>
-            <h3 className="guidance-head">You sell into IT</h3>
+            <span className="guidance-tag">Keycloak when</span>
+            <h3 className="guidance-head">You sell to IT departments</h3>
             <p>
-              Customers ask for SAML, want their AD users mirrored, and audit
-              your IdP. Keycloak treats those as table stakes. Accept the JVM
-              footprint as the cost of doing business.
+              Customers want SAML, want their Active Directory users in your
+              app, and audit your identity provider. Keycloak handles all of
+              that. The trade-off is the Java footprint.
             </p>
           </div>
           <div className="guidance-cell" data-accent="ink">
-            <span className="guidance-tag">Pick SuperTokens when</span>
-            <h3 className="guidance-head">Sessions are the work</h3>
+            <span className="guidance-tag">SuperTokens when</span>
+            <h3 className="guidance-head">Sessions are the hard part</h3>
             <p>
-              Long-lived sessions, mobile clients, refresh rotation, anomaly
-              detection. SuperTokens gets these right out of the box and gives
-              you a recipe layer to compose the rest without writing it.
+              Long sessions, mobile clients, refresh token rotation, hijack
+              detection. SuperTokens does these by default. Recipes cover
+              passwordless and MFA without extra libraries.
             </p>
           </div>
           <div className="guidance-cell" data-accent="paper">
-            <span className="guidance-tag">Pick Better Auth when</span>
-            <h3 className="guidance-head">You ship the product</h3>
+            <span className="guidance-tag">Better Auth when</span>
+            <h3 className="guidance-head">You are shipping a product</h3>
             <p>
-              Small team, TypeScript stack, one database. Better Auth removes a
-              service from the architecture and gives you typed calls all the
-              way to the client. Add plugins as scope grows.
+              Small team, TypeScript, one database. Better Auth removes a
+              service from the architecture and gives you typed calls. Add
+              plugins as scope grows.
             </p>
           </div>
         </div>

@@ -5,12 +5,24 @@ import { BetterAuthMark } from '../components/Marks';
 
 const BASE = '/api/better-auth';
 
+type Session = {
+  id: string;
+  token: string;
+  userId: string;
+  createdAt?: string;
+  expiresAt?: string;
+  ipAddress?: string;
+  userAgent?: string;
+};
+
 export default function BetterAuthDemo() {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('demo@noahcontrols.local');
   const [password, setPassword] = useState('demo1234');
   const [name, setName] = useState('Demo User');
   const [session, setSession] = useState<any>(null);
+  const [sessions, setSessions] = useState<Session[] | null>(null);
+  const [revokedNote, setRevokedNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -52,6 +64,37 @@ export default function BetterAuthDemo() {
     }
   }
 
+  async function listSessions() {
+    setError(null);
+    setRevokedNote(null);
+    try {
+      const res = await fetch(`${BASE}/list-sessions`, { credentials: 'include' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Could not list sessions');
+      setSessions(Array.isArray(data) ? data : data.sessions || []);
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
+  async function revokeOthers() {
+    setError(null);
+    try {
+      const res = await fetch(`${BASE}/revoke-other-sessions`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || data.error || 'Could not revoke');
+      setRevokedNote('Signed out of other devices');
+      listSessions();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  }
+
   async function logout() {
     await fetch(`${BASE}/sign-out`, {
       method: 'POST',
@@ -59,6 +102,8 @@ export default function BetterAuthDemo() {
       headers: { 'content-type': 'application/json' },
     });
     setSession(null);
+    setSessions(null);
+    setRevokedNote(null);
   }
 
   return (
@@ -69,68 +114,67 @@ export default function BetterAuthDemo() {
         </div>
         <h1 className="provider-title">
           Better Auth<br />
-          is <span style={{ color: 'var(--brick)' }}>part of</span><br />
-          your codebase.
+          is a <span style={{ color: 'var(--brick)' }}>library</span>,<br />
+          not a server.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--brick)' }}>
           <BetterAuthMark size={140} />
         </div>
         <p className="provider-thesis">
-          No second process to operate. The auth surface compiles into your
-          server, owns a handful of tables, and exposes typed handlers all the
-          way to the client. Plugins add organizations, two-factor, passkeys,
-          and magic links when you actually need them.
+          You install it into your existing app. It adds a handful of tables to
+          your database and exposes typed functions for signup, login, and
+          sessions. There is no second process to deploy.
         </p>
         <div className="provider-callouts">
-          <strong>Origin:</strong> Bekacru, 2024
-          <span>Runtime: pure TypeScript</span>
+          <strong>Made by:</strong> Bekacru, 2024
+          <span>Runtime: TypeScript</span>
           <span>License: MIT</span>
-          <span>Deploy: nothing extra</span>
+          <span>Setup: an npm install</span>
         </div>
       </header>
 
       <div className="provider-grid">
-        <Marker num="01" label="Strengths, watchouts, fit" />
+        <Marker num="01" label="What it is good at, what it costs, when to use it" />
         <div className="three-cols">
           <div data-accent="orange">
             <h4>Strengths</h4>
             <ul>
               <li>Lives in your repo, no separate auth service</li>
-              <li>End-to-end typed client, no manual response parsing</li>
-              <li>Kysely backed: SQLite, Postgres, MySQL, libSQL</li>
-              <li>Plugins for orgs, 2FA, passkeys, magic link, JWT</li>
+              <li>Typed calls from server to client</li>
+              <li>Works with SQLite, Postgres, MySQL, libSQL</li>
+              <li>Plugins for organizations, 2FA, passkeys, magic link</li>
             </ul>
           </div>
           <div>
-            <h4>Watch outs</h4>
+            <h4>Trade-offs</h4>
             <ul>
-              <li>Youngest of the three, expect breaking minors</li>
-              <li>You operate the security boundary yourself</li>
-              <li>No admin console, you build user management</li>
-              <li>No SAML, no LDAP federation</li>
+              <li>Newer project, expect breaking minors</li>
+              <li>You own the security of the integration</li>
+              <li>No admin console</li>
+              <li>No SAML, no LDAP</li>
             </ul>
           </div>
           <div data-accent="brick">
             <h4>Best fit</h4>
             <ul>
-              <li>Small TypeScript teams shipping a product</li>
+              <li>TypeScript teams shipping a product</li>
               <li>Apps where a separate auth service is overkill</li>
-              <li>Codebases that want one schema, one deploy</li>
-              <li>Teams comfortable owning the auth surface</li>
+              <li>Codebases that want one schema and one deploy</li>
+              <li>Teams comfortable owning auth code</li>
             </ul>
           </div>
         </div>
 
-        <Marker num="02" label="The one thing it does that the others can't" />
+        <Marker num="02" label="The feature it is known for" />
         <section className="standout" data-accent="paper">
           <div>
-            <span className="standout-eyebrow">Distinctive / Type safety</span>
-            <h3>Auth is a function call, not a network protocol.</h3>
+            <span className="standout-eyebrow">Typed client</span>
+            <h3>Sign in is a function call, not a network protocol.</h3>
             <p style={{ marginTop: 18 }}>
-              The Better Auth client mirrors the server. Sign in, sign up,
-              fetch session, list organizations: all typed, all autocompleted,
-              all checked at compile time. Mistakes that show up at runtime
-              with REST clients show up in your editor here.
+              The Better Auth client mirrors the server. Sign in, sign up, get
+              session, list organizations: all typed, all autocompleted, all
+              checked at build time. Mistakes that show up at runtime with a
+              REST client show up in your editor here.
             </p>
           </div>
           <div className="standout-figure">
@@ -157,14 +201,14 @@ const { data, error } =
   });
 
 if (data) {
-  // data.user.id, data.user.email
-  //   are typed, no casts
+  // data.user.id and data.user.email
+  // are typed, no casts needed
 }`}
             </pre>
           </div>
         </section>
 
-        <Marker num="03" label="Live demo / SQLite session" />
+        <Marker num="03" label="Sign in and try session management" />
         <section className="demo-wrap">
           <div className="demo-left">
             {!session ? (
@@ -183,11 +227,11 @@ if (data) {
                   <label>Email
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </label>
-                  <label>Password (8+)
+                  <label>Password (8 or more)
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
                   </label>
                   <button className="btn" disabled={busy} type="submit">
-                    <span>{busy ? 'Working' : mode === 'login' ? 'Authenticate' : 'Create account'}</span>
+                    <span>{busy ? 'Working' : mode === 'login' ? 'Log in' : 'Create account'}</span>
                     <span>&rarr;</span>
                   </button>
                 </form>
@@ -195,23 +239,58 @@ if (data) {
             ) : (
               <>
                 <div className="alert success">
-                  Authenticated as {session.user?.email}. Stored in the local SQLite file.
+                  Signed in as {session.user?.email}. Session is stored in SQLite.
                 </div>
                 {error && <div className="alert error">{error}</div>}
+                {revokedNote && <div className="alert success">{revokedNote}</div>}
                 <div className="btn-row">
                   <button className="btn" onClick={loadSession}>
                     <span>Refresh session</span><span>&rarr;</span>
+                  </button>
+                  <button className="btn secondary" onClick={listSessions}>
+                    <span>List my sessions</span><span>&rarr;</span>
+                  </button>
+                  <button className="btn secondary" onClick={revokeOthers}>
+                    <span>Sign out other devices</span><span>&times;</span>
                   </button>
                   <button className="btn secondary" onClick={logout}>
                     <span>Log out</span><span>&times;</span>
                   </button>
                 </div>
+                <p style={{ marginTop: 18, fontSize: 13, lineHeight: 1.5, color: 'rgba(14,14,12,0.7)' }}>
+                  Open this page in a second browser to make a second session,
+                  then list them here and revoke the others.
+                </p>
+                {sessions && (
+                  <div style={{ marginTop: 16, display: 'grid', gap: 8 }}>
+                    {sessions.length === 0 && (
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(14,14,12,0.6)' }}>
+                        No sessions returned
+                      </div>
+                    )}
+                    {sessions.map((s) => (
+                      <div key={s.id} style={{
+                        border: '2px solid var(--ink)',
+                        padding: '10px 12px',
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto',
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 11,
+                        letterSpacing: '0.1em',
+                        background: 'var(--paper)',
+                      }}>
+                        <span>{(s.token || s.id || '').slice(0, 18)}&hellip;</span>
+                        <span>{s.ipAddress || 'local'}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </>
             )}
           </div>
           <div className="demo-right">
-            <div className="demo-status">Response / live</div>
-            <pre>{session ? JSON.stringify(session, null, 2) : '// sign in to populate the session row'}</pre>
+            <div className="demo-status">Response from the backend</div>
+            <pre>{session ? JSON.stringify(session, null, 2) : '// sign in to create a session row'}</pre>
           </div>
         </section>
       </div>

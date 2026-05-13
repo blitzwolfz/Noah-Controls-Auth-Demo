@@ -114,8 +114,8 @@ export default function BetterAuthDemo() {
         </div>
         <h1 className="provider-title">
           Better Auth<br />
-          runs <span style={{ color: 'var(--brick)' }}>inside</span><br />
-          the backend.
+          is the <span style={{ color: 'var(--brick)' }}>pick</span><br />
+          for Phase 1.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--brick)' }}>
           <BetterAuthMark size={96} />
@@ -124,8 +124,8 @@ export default function BetterAuthDemo() {
           A TypeScript library, not a server. It installs into the NestJS
           backend, writes its tables into the same Postgres as the building
           data, and exposes typed functions for sign up, sign in, and
-          sessions. No second process to deploy. Not in the original eval
-          doc, but worth prototyping because the portal is TypeScript-first.
+          sessions. Smallest footprint of the three prototypes, and the
+          tightest fit with the TypeScript-first portal stack.
         </p>
         <div className="provider-callouts">
           <strong>Started by Bekacru, 2024</strong>
@@ -145,24 +145,25 @@ export default function BetterAuthDemo() {
               <li>User tables sit next to building data in one Postgres</li>
               <li>Server and client are typed end to end</li>
               <li>Plugins cover orgs, 2FA, passkeys, magic link</li>
+              <li>Smallest footprint, fits the cost-effective VM target</li>
             </ul>
           </div>
           <div>
             <h4>Trade-offs</h4>
             <ul>
-              <li>Youngest of the three. Expect breaking changes on minors</li>
-              <li>Not in the original eval doc, lighter prior validation</li>
-              <li>No admin UI, no SAML, no LDAP federation</li>
-              <li>Security boundary is in the application repo</li>
+              <li>Youngest of the three, expect breaking minors</li>
+              <li>No admin UI, the user-management page is on the team</li>
+              <li>No SAML, no LDAP, no Active Directory</li>
+              <li>Security boundary lives in the application repo</li>
             </ul>
           </div>
           <div data-accent="brick">
-            <h4>Best fit (for the portal)</h4>
+            <h4>Why it lines up with Phase 1</h4>
             <ul>
-              <li>Cloud budget cannot support a second container</li>
-              <li>One Postgres schema is preferred for everything</li>
-              <li>Team is comfortable owning the auth code itself</li>
-              <li>Phase 1 RBAC needs stay simple</li>
+              <li>One Postgres, one deploy, one migration history</li>
+              <li>Granular permissions live next to the data they protect</li>
+              <li>TypeScript-first matches the rest of the stack</li>
+              <li>Plugins land 2FA and magic link when Phase 2 needs them</li>
             </ul>
           </div>
         </div>

@@ -381,40 +381,40 @@ export default function Home() {
         <div className="recommendation">
           <div className="rec-eyebrow">For Phase 1 of the Energy Profiling Portal</div>
           <h2 className="rec-headline">
-            Build Phase 1 on <em>SuperTokens</em>. Keycloak stays ready for the first SAML customer.
+            Build Phase 1 on <em>Better Auth</em>. SuperTokens and Keycloak stay on the bench.
           </h2>
           <div className="rec-pick">
             <div className="rec-pick-tag">The pick</div>
-            <div className="rec-pick-name">SuperTokens</div>
+            <div className="rec-pick-name">Better Auth</div>
           </div>
 
           <div className="rec-cols">
             <div className="rec-col">
               <h4>Why this fits the portal</h4>
               <ul>
-                <li>RBAC and session management are built in, not bolted on</li>
-                <li>Custom React UI is the default flow, no hosted login portal</li>
-                <li>Self-hosted, open source, no recurring license cost</li>
-                <li>Runs on a small cloud VM next to the NestJS backend</li>
-                <li>Aligns with the "best balance" call from the eval doc</li>
+                <li>One Postgres, one deploy, no second container to operate</li>
+                <li>Auth tables sit next to building envelope and utility data</li>
+                <li>Sign in and session are typed end to end into the React app</li>
+                <li>Plugins cover orgs, 2FA, magic link as Phase 2 needs them</li>
+                <li>Smallest footprint, matches the cost-effective VM target</li>
               </ul>
             </div>
             <div className="rec-col">
               <h4>What it won't do</h4>
               <ul>
-                <li>No SAML support. No LDAP or AD federation</li>
-                <li>Multi-tenant story is less mature than Keycloak's realms</li>
-                <li>Authorization is RBAC, not the policy graph that Keto offers</li>
-                <li>Cookie path defaults need careful setup behind the proxy</li>
+                <li>No admin UI. The user-management page is on us to build</li>
+                <li>No SAML, no LDAP federation, no Active Directory</li>
+                <li>Newest of the three, expect breaking changes on minor bumps</li>
+                <li>Security boundary lives in the app repo, not behind a service</li>
               </ul>
             </div>
             <div className="rec-col">
               <h4>If things change</h4>
               <ul>
-                <li>Add Keycloak the first time a building owner asks for SAML or AD</li>
-                <li>Bring in Ory Keto if authorization becomes resource-level per device</li>
-                <li>Better Auth stays in the prototype as a comparison reference</li>
-                <li>User export is documented for both Keycloak and SuperTokens</li>
+                <li>Add Keycloak the first time a customer asks for SAML or AD</li>
+                <li>Move to SuperTokens if MFA or hardened sessions become urgent</li>
+                <li>Either can run alongside, routed per tenant behind a flag</li>
+                <li>User export from Better Auth is straightforward, we checked</li>
               </ul>
             </div>
           </div>
@@ -422,11 +422,11 @@ export default function Home() {
           <div className="rec-plan">
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">By Apr 26</div>
-              <div className="rec-plan-title">SuperTokens in the NestJS backend</div>
+              <div className="rec-plan-title">Better Auth in the NestJS backend</div>
               <p className="rec-plan-body">
-                Drop the core into docker-compose. Email and password, session
-                cookies, custom React login. Defines three roles: building_admin,
-                engineer, viewer.
+                Install Better Auth, point it at the project Postgres, run the
+                migration. Email and password, session cookies, custom React
+                login. Three roles to start: building_admin, engineer, viewer.
               </p>
             </div>
             <div className="rec-plan-cell">
@@ -442,18 +442,18 @@ export default function Home() {
               <div className="rec-plan-tag">By May 17</div>
               <div className="rec-plan-title">Admin tools and audit log</div>
               <p className="rec-plan-body">
-                Build the small user-management page that SuperTokens does not
-                ship out of the box. Pipe SuperTokens events into an audit table
-                for the closure criteria.
+                Build the user-management page that Better Auth does not ship.
+                Pipe Better Auth hooks into an audit table to satisfy the
+                Phase 1 closure criteria.
               </p>
             </div>
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">Trigger</div>
-              <div className="rec-plan-title">When Keycloak comes in</div>
+              <div className="rec-plan-title">When to swap providers</div>
               <p className="rec-plan-body">
-                The first customer that requires SAML or wants their Active
-                Directory wired in. Stand Keycloak up alongside and broker
-                that tenant through it.
+                Keycloak comes in for the first SAML or Active Directory
+                customer. SuperTokens comes in if hardened sessions or MFA
+                land on a near-term roadmap.
               </p>
             </div>
           </div>
@@ -486,12 +486,13 @@ export default function Home() {
             </p>
           </div>
           <div className="escape-cell">
-            <div className="escape-tag">If / Budget</div>
-            <h3 className="escape-title">The cloud bill has to stay tiny.</h3>
+            <div className="escape-tag">If / Sessions</div>
+            <h3 className="escape-title">MFA and hardened sessions land soon.</h3>
             <p>
-              If a second container is too much overhead for the small VM the
-              project budget allows, drop to Better Auth. One process, one
-              database, no second container.
+              If two-factor and refresh token rotation become near-term
+              requirements before the first pilot building, switch to
+              SuperTokens. It ships those as built-ins rather than as
+              plugins to wire up.
             </p>
           </div>
         </div>

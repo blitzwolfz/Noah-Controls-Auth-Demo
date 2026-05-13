@@ -108,8 +108,8 @@ export default function SuperTokensDemo() {
         </div>
         <h1 className="provider-title">
           SuperTokens<br />
-          is the <span style={{ color: 'var(--cobalt)' }}>recommendation</span><br />
-          for Phase 1.
+          balances <span style={{ color: 'var(--cobalt)' }}>features</span><br />
+          and operations.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--cobalt)' }}>
           <SuperTokensMark size={96} />
@@ -117,9 +117,10 @@ export default function SuperTokensDemo() {
         <p className="provider-thesis">
           A developer-focused authentication platform. Self-hosted, open
           source, no recurring licensing. Built-in RBAC, sessions, and
-          recipes for password, social, and MFA. Custom React UI is the
-          default flow. Matches the eval doc's "best balance" call and lines
-          up with the Phase 1 deliverables.
+          recipes for password, social, and MFA. The eval doc called this
+          the best balance of simplicity and enterprise capability. The
+          recommendation it lost out to was a closer call than the matrix
+          suggests.
         </p>
         <div className="provider-callouts">
           <strong>By the SuperTokens team, 2020</strong>

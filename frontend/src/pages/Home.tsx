@@ -226,17 +226,11 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <div className="hero-shapes" aria-hidden>
-          <div className="shape-circle" />
-          <div className="shape-triangle" />
-          <div className="shape-square" />
-        </div>
         <div className="hero-grid">
+          <div className="hero-eyebrow">Auth Comparison &middot; Noah Controls</div>
           <h1 className="hero-title">
-            Three<br />
-            <em>Auth</em><br />
-            <span className="stroke">Providers,</span><br />
-            One Demo.
+            Three auth providers,<br />
+            <em>one working demo.</em>
           </h1>
           <div className="hero-lede">
             <p>

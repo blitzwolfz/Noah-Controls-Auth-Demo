@@ -13,7 +13,7 @@ export default function App() {
             <div className="brand-mark" aria-hidden />
             <div className="brand-text">
               Noah Controls
-              <small>Auth Comparison</small>
+              <small>Auth Writeup</small>
             </div>
           </div>
           <nav className="nav">
@@ -22,7 +22,7 @@ export default function App() {
             <NavLink to="/supertokens">02 / SuperTokens</NavLink>
             <NavLink to="/better-auth">03 / Better Auth</NavLink>
           </nav>
-          <div className="header-meta">Local demo &middot; v0.2</div>
+          <div className="header-meta">Internal &middot; v0.2</div>
         </div>
       </header>
       <main>
@@ -36,12 +36,12 @@ export default function App() {
       <footer className="footer">
         <div className="footer-inner">
           <div className="footer-brand">
-            Noah Controls<br />Auth Comparison
+            Noah Controls<br />Auth writeup
           </div>
           <div className="footer-meta">
-            <span>Three providers, one demo</span>
-            <span>Self-hosted, runs locally</span>
-            <span>Internal review</span>
+            <span>Runs on your laptop</span>
+            <span>Docker compose + npm install</span>
+            <span>Not a customer-facing page</span>
           </div>
         </div>
       </footer>

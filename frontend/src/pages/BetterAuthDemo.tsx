@@ -70,7 +70,7 @@ export default function BetterAuthDemo() {
     try {
       const res = await fetch(`${BASE}/list-sessions`, { credentials: 'include' });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Could not list sessions');
+      if (!res.ok) throw new Error(data.message || "Couldn't list sessions");
       setSessions(Array.isArray(data) ? data : data.sessions || []);
     } catch (err: any) {
       setError(err.message);
@@ -87,8 +87,8 @@ export default function BetterAuthDemo() {
         body: JSON.stringify({}),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || data.error || 'Could not revoke');
-      setRevokedNote('Signed out of other devices');
+      if (!res.ok) throw new Error(data.message || data.error || "Couldn't revoke");
+      setRevokedNote('Other devices signed out');
       listSessions();
     } catch (err: any) {
       setError(err.message);
@@ -110,7 +110,7 @@ export default function BetterAuthDemo() {
     <div className="provider-page">
       <header className="provider-head">
         <div className="provider-eyebrow">
-          <Link to="/">&larr; Back to overview</Link>
+          <Link to="/">&larr; Back to the writeup</Link>
         </div>
         <h1 className="provider-title">
           Better Auth<br />
@@ -118,75 +118,77 @@ export default function BetterAuthDemo() {
           not a server.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--brick)' }}>
-          <BetterAuthMark size={140} />
+          <BetterAuthMark size={96} />
         </div>
         <p className="provider-thesis">
-          You install it into your existing app. It adds a handful of tables to
-          your database and exposes typed functions for signup, login, and
-          sessions. There is no second process to deploy.
+          You npm install it into the app you've already got. It writes a few
+          tables into your database and gives you typed functions for sign up,
+          sign in, and sessions. There's no second process to deploy or
+          restart.
         </p>
         <div className="provider-callouts">
-          <strong>Made by:</strong> Bekacru, 2024
-          <span>Runtime: TypeScript</span>
-          <span>License: MIT</span>
-          <span>Setup: an npm install</span>
+          <strong>Started by Bekacru</strong>
+          <span>2024, growing fast</span>
+          <span>Pure TypeScript</span>
+          <span>MIT</span>
+          <span>An npm install and a migration</span>
         </div>
       </header>
 
       <div className="provider-grid">
-        <Marker num="01" label="What it is good at, what it costs, when to use it" />
+        <Marker num="01" label="Strengths, trade-offs, fit" />
         <div className="three-cols">
           <div data-accent="orange">
             <h4>Strengths</h4>
             <ul>
-              <li>Lives in your repo, no separate auth service</li>
-              <li>Typed calls from server to client</li>
-              <li>Works with SQLite, Postgres, MySQL, libSQL</li>
-              <li>Plugins for organizations, 2FA, passkeys, magic link</li>
+              <li>Lives in your repo, no separate service</li>
+              <li>Server and client are typed end to end</li>
+              <li>SQLite, Postgres, MySQL, libSQL</li>
+              <li>Plugins cover orgs, 2FA, passkeys, magic link</li>
             </ul>
           </div>
           <div>
             <h4>Trade-offs</h4>
             <ul>
-              <li>Newer project, expect breaking minors</li>
-              <li>You own the security of the integration</li>
-              <li>No admin console</li>
+              <li>It's the newest of the three. Expect breaking minors</li>
+              <li>Auth runs in your process. The security is on you</li>
+              <li>No admin UI, build your own</li>
               <li>No SAML, no LDAP</li>
             </ul>
           </div>
           <div data-accent="brick">
             <h4>Best fit</h4>
             <ul>
-              <li>TypeScript teams shipping a product</li>
+              <li>TypeScript teams trying to ship</li>
               <li>Apps where a separate auth service is overkill</li>
-              <li>Codebases that want one schema and one deploy</li>
-              <li>Teams comfortable owning auth code</li>
+              <li>Codebases with one schema, one deploy</li>
+              <li>Teams comfortable owning their auth</li>
             </ul>
           </div>
         </div>
 
-        <Marker num="02" label="The feature it is known for" />
+        <Marker num="02" label="What makes it different" />
         <section className="standout" data-accent="paper">
           <div>
             <span className="standout-eyebrow">Typed client</span>
-            <h3>Sign in is a function call, not a network protocol.</h3>
+            <h3>Sign in is a function call you can autocomplete.</h3>
             <p style={{ marginTop: 18 }}>
-              The Better Auth client mirrors the server. Sign in, sign up, get
-              session, list organizations: all typed, all autocompleted, all
-              checked at build time. Mistakes that show up at runtime with a
-              REST client show up in your editor here.
+              The client mirrors the server. Sign in, sign up, get session,
+              list orgs: all of them typed, all of them autocompleted in your
+              editor. The bugs you'd usually catch in QA, you catch at build
+              time instead.
             </p>
           </div>
           <div className="standout-figure">
             <pre style={{
-              background: 'var(--ink)',
+              background: 'var(--ink-strong)',
               color: 'var(--paper)',
               padding: '20px 24px',
               fontFamily: 'var(--font-mono)',
               fontSize: 12,
               lineHeight: 1.6,
               margin: 0,
-              border: 'var(--rule)',
+              border: '1px solid var(--hair-strong)',
               width: '100%',
             }}>
 {`import { createAuthClient } from
@@ -208,7 +210,7 @@ if (data) {
           </div>
         </section>
 
-        <Marker num="03" label="Sign in and try session management" />
+        <Marker num="03" label="Try it" />
         <section className="demo-wrap">
           <div className="demo-left">
             {!session ? (
@@ -227,7 +229,7 @@ if (data) {
                   <label>Email
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                   </label>
-                  <label>Password (8 or more)
+                  <label>Password (8 chars min)
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={8} />
                   </label>
                   <button className="btn" disabled={busy} type="submit">
@@ -239,7 +241,7 @@ if (data) {
             ) : (
               <>
                 <div className="alert success">
-                  Signed in as {session.user?.email}. Session is stored in SQLite.
+                  Signed in as {session.user?.email}. Row is in SQLite.
                 </div>
                 {error && <div className="alert error">{error}</div>}
                 {revokedNote && <div className="alert success">{revokedNote}</div>}
@@ -257,20 +259,21 @@ if (data) {
                     <span>Log out</span><span>&times;</span>
                   </button>
                 </div>
-                <p style={{ marginTop: 18, fontSize: 13, lineHeight: 1.5, color: 'rgba(14,14,12,0.7)' }}>
-                  Open this page in a second browser to make a second session,
-                  then list them here and revoke the others.
+                <p style={{ marginTop: 18, fontSize: 13, lineHeight: 1.5, color: 'var(--muted)' }}>
+                  Sign in here, then sign in again as the same user in a
+                  different browser. Hit "List my sessions" to see both, then
+                  revoke the other.
                 </p>
                 {sessions && (
                   <div style={{ marginTop: 16, display: 'grid', gap: 8 }}>
                     {sessions.length === 0 && (
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(14,14,12,0.6)' }}>
-                        No sessions returned
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--muted)' }}>
+                        No sessions came back
                       </div>
                     )}
                     {sessions.map((s) => (
                       <div key={s.id} style={{
-                        border: '2px solid var(--ink)',
+                        border: '1px solid var(--hair-strong)',
                         padding: '10px 12px',
                         display: 'grid',
                         gridTemplateColumns: '1fr auto',
@@ -290,7 +293,7 @@ if (data) {
           </div>
           <div className="demo-right">
             <div className="demo-status">Response from the backend</div>
-            <pre>{session ? JSON.stringify(session, null, 2) : '// sign in to create a session row'}</pre>
+            <pre>{session ? JSON.stringify(session, null, 2) : "// sign in to make a session row"}</pre>
           </div>
         </section>
       </div>

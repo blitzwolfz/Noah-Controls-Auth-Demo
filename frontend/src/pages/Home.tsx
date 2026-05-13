@@ -180,43 +180,43 @@ type Scenario = {
 const scenarios: Scenario[] = [
   {
     num: '01',
-    ifText: 'A customer wants SAML',
-    body: "They've got an Active Directory, they want SCIM provisioning, and someone on their side will read the SAML assertion before the contract gets signed.",
-    pick: 'Keycloak',
-    pickId: 'keycloak',
-  },
-  {
-    num: '02',
-    ifText: 'Sessions last weeks on mobile',
-    body: 'A stolen refresh token is a real problem because the session never ends. You need rotation and you need it to kill the session when something looks wrong.',
+    ifText: 'Engineers enter data for one building only',
+    body: 'Per-building permissions are a Phase 1 deliverable. Each engineer should see and edit their assigned buildings, nothing else. RBAC plus resource scoping handles this.',
     pick: 'SuperTokens',
     pickId: 'supertokens',
   },
   {
-    num: '03',
-    ifText: 'Two of you, shipping a product',
-    body: "One database. One deploy. You don't have the headroom to run a second service and you don't want to.",
-    pick: 'Better Auth',
-    pickId: 'better-auth',
-  },
-  {
-    num: '04',
-    ifText: 'You sell into healthcare or finance',
-    body: 'Audit logs, fine-grained permissions, and a console the security team can poke at are non-negotiable. Not maybe, not eventually.',
+    num: '02',
+    ifText: 'A Noah Controls customer needs corporate SSO',
+    body: "A building owner asks that their staff sign in with the company Active Directory, with SAML on their end. Out of the three open-source picks we shortlisted, only Keycloak does this without bolt-ons.",
     pick: 'Keycloak',
     pickId: 'keycloak',
   },
   {
+    num: '03',
+    ifText: 'Phase 1 needs to land by May 18',
+    body: "Advanced user management and granular permissions are due in six weeks. The auth layer should not be the bottleneck. Speed of integration matters more than feature depth.",
+    pick: 'SuperTokens',
+    pickId: 'supertokens',
+  },
+  {
+    num: '04',
+    ifText: 'Cloud VMs are kept cost-effective',
+    body: "The plan calls for small cloud VMs with budget alerts. A second container with a JVM and its own Postgres is overhead we would rather avoid this early.",
+    pick: 'Better Auth',
+    pickId: 'better-auth',
+  },
+  {
     num: '05',
-    ifText: 'Magic link and 2FA are next quarter',
-    body: "You don't want to stitch four libraries together to land those features. You want one place to turn them on.",
+    ifText: 'MFA goes live before any pilot building',
+    body: "Property managers handle controls that change set-points on real equipment. Two-factor for those roles is not optional. SuperTokens has it as a recipe, no extra integration.",
     pick: 'SuperTokens',
     pickId: 'supertokens',
   },
   {
     num: '06',
-    ifText: 'Users live next to the rest of your data',
-    body: "You already trust Prisma or Drizzle. Users should be in the same migration history as orders and devices, not in a separate database run by another tool.",
+    ifText: 'Users sit in the same schema as building data',
+    body: "Building envelopes, utility bills, and device packages all live in one Postgres. There is a real case for the user table to sit next to them under the same migration history.",
     pick: 'Better Auth',
     pickId: 'better-auth',
   },
@@ -227,45 +227,47 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="hero-grid">
-          <div className="hero-eyebrow">Noah Controls / Auth writeup</div>
+          <div className="hero-eyebrow">Noah Controls &times; GBC / Energy Profiling Portal</div>
           <h1 className="hero-title">
-            Three auth providers.<br />
-            <em>One demo each.</em>
+            Picking auth for<br />
+            <em>the portal.</em>
           </h1>
           <div className="hero-lede">
             <p>
-              We were asked to pick an auth provider for the new product, so we
-              built the same login against three of them and wrote down what we
-              found. Nineteen rows in the matrix, six scenarios after that.
+              Phase 1 of the Energy Profiling Portal needs advanced user
+              management and granular content permissions before engineers
+              start entering building data on April 6. This page walks
+              through the three open-source options we prototyped against the
+              same NestJS backend.
             </p>
-            <p>Our pick is at the bottom.</p>
+            <p>The pick for the project sits at the bottom.</p>
           </div>
           <div className="hero-meta">
-            <div>Providers<b>03</b></div>
+            <div>Prototyped<b>03</b></div>
             <div>Features checked<b>19</b></div>
             <div>Scenarios<b>06</b></div>
-            <div>Picks<b>01</b></div>
+            <div>Also evaluated<b>03</b></div>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <Marker num="00" label="Meet the three" />
+        <Marker num="00" label="The three we prototyped" />
         <div className="trio">
           <article className="trio-card" data-accent="orange">
             <div className="trio-mark"><KeycloakMark size={36} /></div>
-            <div className="trio-index">01 / Own server</div>
+            <div className="trio-index">01 / Enterprise IAM</div>
             <h2 className="trio-name">Keycloak</h2>
             <div className="trio-tag">Built by Red Hat</div>
             <p className="trio-body">
-              It's a separate server. Users sign in on Keycloak's pages and
-              your app gets a signed token back. If you've sold into an IT
-              department before, you've probably seen it.
+              The mature enterprise option. The natural pick if a Noah
+              Controls customer ever asks for SAML or wants their corporate
+              Active Directory wired into the portal.
             </p>
             <ul className="trio-list">
-              <li>Speaks SAML, OIDC, LDAP, Kerberos</li>
-              <li>Real admin UI for users and roles</li>
-              <li>Java. Wants about a gig of RAM</li>
+              <li>Built-in SSO, MFA, RBAC, OAuth2 / OIDC / SAML</li>
+              <li>Pulls users from LDAP and AD</li>
+              <li>Heavyweight. JVM plus its own Postgres</li>
             </ul>
             <Link to="/keycloak" className="trio-cta">
               <span>Read the writeup</span>
@@ -275,18 +277,19 @@ export default function Home() {
 
           <article className="trio-card" data-accent="cobalt">
             <div className="trio-mark"><SuperTokensMark size={36} /></div>
-            <div className="trio-index">02 / Server + SDK</div>
+            <div className="trio-index">02 / Developer-focused</div>
             <h2 className="trio-name">SuperTokens</h2>
-            <div className="trio-tag">Sessions you don't write yourself</div>
+            <div className="trio-tag">Best balance of simplicity and depth</div>
             <p className="trio-body">
-              A small server plus a Node SDK. The SDK does the work, the
-              server stores users and rotates session cookies. They'll host
-              it for you if you don't want to.
+              A small core plus a Node SDK. RBAC and session management are
+              first-class. Our eval doc already flagged this as the best
+              balance of simplicity and enterprise capability, and it held
+              up in the prototype.
             </p>
             <ul className="trio-list">
-              <li>Rotating refresh tokens, on by default</li>
-              <li>Password, magic link, social, MFA, all opt-in</li>
-              <li>Self-host or pay them to host it</li>
+              <li>RBAC, sessions, MFA, social login as recipes</li>
+              <li>Strong React and TypeScript developer experience</li>
+              <li>Custom login UI is the default path, not the exception</li>
             </ul>
             <Link to="/supertokens" className="trio-cta">
               <span>Read the writeup</span>
@@ -298,16 +301,16 @@ export default function Home() {
             <div className="trio-mark"><BetterAuthMark size={36} /></div>
             <div className="trio-index">03 / Library</div>
             <h2 className="trio-name">Better Auth</h2>
-            <div className="trio-tag">Lives in your repo</div>
+            <div className="trio-tag">No second service to run</div>
             <p className="trio-body">
-              Not a server. You npm install it, point it at your database, and
-              it adds the tables it needs. Calls between server and client are
-              typed. Plugins cover the rest.
+              An option we added on top of the brief because the portal is
+              TypeScript-first. It runs inside the NestJS process and writes
+              its tables into the same Postgres as the building data.
             </p>
             <ul className="trio-list">
-              <li>Plugins: orgs, 2FA, passkeys, magic link</li>
-              <li>SQLite, Postgres, MySQL, libSQL</li>
-              <li>Auth runs in your process. The security is on you</li>
+              <li>No extra container, no extra database</li>
+              <li>Plugins for orgs, 2FA, passkeys, magic link</li>
+              <li>Youngest of the three, treat the security boundary with care</li>
             </ul>
             <Link to="/better-auth" className="trio-cta">
               <span>Read the writeup</span>
@@ -318,10 +321,10 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="01" label="What's in the box" />
+        <Marker num="01" label="Feature matrix" />
         <h2 className="section-head">
-          <small>The matrix</small>
-          Nineteen things we checked.
+          <small>What's actually there</small>
+          Nineteen rows, mapped against the project requirements.
         </h2>
         <div className="matrix-wrap">
           <table className="matrix">
@@ -348,10 +351,10 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="02" label="If / then" />
+        <Marker num="02" label="Project scenarios" />
         <h2 className="section-head">
-          <small>Scenarios</small>
-          Six situations, six answers.
+          <small>Real situations from the project</small>
+          Six things that will actually happen.
         </h2>
         <div className="scenarios">
           {scenarios.map((s) => (
@@ -374,81 +377,83 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="03" label="Our take" />
+        <Marker num="03" label="Recommendation" />
         <div className="recommendation">
-          <div className="rec-eyebrow">Our take, after a week of poking at all three</div>
+          <div className="rec-eyebrow">For Phase 1 of the Energy Profiling Portal</div>
           <h2 className="rec-headline">
-            Start on <em>Better Auth</em>. Keep Keycloak in your back pocket.
+            Build Phase 1 on <em>SuperTokens</em>. Keycloak stays ready for the first SAML customer.
           </h2>
           <div className="rec-pick">
-            <div className="rec-pick-tag">Our pick</div>
-            <div className="rec-pick-name">Better Auth</div>
+            <div className="rec-pick-tag">The pick</div>
+            <div className="rec-pick-name">SuperTokens</div>
           </div>
 
           <div className="rec-cols">
             <div className="rec-col">
-              <h4>Why this fits</h4>
+              <h4>Why this fits the portal</h4>
               <ul>
-                <li>One Postgres, one deploy, no extra container to babysit</li>
-                <li>Sign in and session are typed end to end</li>
-                <li>Plugins cover the next year of work: orgs, 2FA, magic link</li>
-                <li>Users sit in the same database as orders and devices</li>
+                <li>RBAC and session management are built in, not bolted on</li>
+                <li>Custom React UI is the default flow, no hosted login portal</li>
+                <li>Self-hosted, open source, no recurring license cost</li>
+                <li>Runs on a small cloud VM next to the NestJS backend</li>
+                <li>Aligns with the "best balance" call from the eval doc</li>
               </ul>
             </div>
             <div className="rec-col">
               <h4>What it won't do</h4>
               <ul>
-                <li>No admin UI. You'll build a thin user list</li>
-                <li>No SAML. No LDAP. Don't expect either</li>
-                <li>It's young. Expect breaking changes on minor bumps</li>
-                <li>Auth lives in your repo, so the audit story is on you</li>
+                <li>No SAML support. No LDAP or AD federation</li>
+                <li>Multi-tenant story is less mature than Keycloak's realms</li>
+                <li>Authorization is RBAC, not the policy graph that Keto offers</li>
+                <li>Cookie path defaults need careful setup behind the proxy</li>
               </ul>
             </div>
             <div className="rec-col">
               <h4>If things change</h4>
               <ul>
-                <li>Add Keycloak the first time a customer asks for SAML</li>
-                <li>Switch to SuperTokens if mobile sessions become a risk</li>
-                <li>Either can sit behind a flag, routed per tenant</li>
-                <li>Exporting users out of Better Auth is straightforward</li>
+                <li>Add Keycloak the first time a building owner asks for SAML or AD</li>
+                <li>Bring in Ory Keto if authorization becomes resource-level per device</li>
+                <li>Better Auth stays in the prototype as a comparison reference</li>
+                <li>User export is documented for both Keycloak and SuperTokens</li>
               </ul>
             </div>
           </div>
 
           <div className="rec-plan">
             <div className="rec-plan-cell">
-              <div className="rec-plan-tag">Week 01</div>
-              <div className="rec-plan-title">Drop it in</div>
+              <div className="rec-plan-tag">By Apr 26</div>
+              <div className="rec-plan-title">SuperTokens in the NestJS backend</div>
               <p className="rec-plan-body">
-                Add Better Auth to the Nest app, point it at Postgres, get
-                email and password working with a session cookie. Move the
-                existing users over while you're there.
+                Drop the core into docker-compose. Email and password, session
+                cookies, custom React login. Defines three roles: building_admin,
+                engineer, viewer.
               </p>
             </div>
             <div className="rec-plan-cell">
-              <div className="rec-plan-tag">Week 02</div>
-              <div className="rec-plan-title">Turn on plugins</div>
+              <div className="rec-plan-tag">By May 10</div>
+              <div className="rec-plan-title">Granular per-building permissions</div>
               <p className="rec-plan-body">
-                Organizations plugin so each tenant has its own scope. Magic
-                link for forgotten passwords. TOTP behind a user setting for
-                anyone who wants 2FA.
+                Map each user to the buildings they can see or edit. Enforce on
+                every API route that reads or writes envelope, utility, or
+                weather data.
               </p>
             </div>
             <div className="rec-plan-cell">
-              <div className="rec-plan-tag">Week 03</div>
-              <div className="rec-plan-title">Build the bits it doesn't ship</div>
+              <div className="rec-plan-tag">By May 17</div>
+              <div className="rec-plan-title">Admin tools and audit log</div>
               <p className="rec-plan-body">
-                A user list page, a force-logout button, and an audit log fed
-                by Better Auth hooks. Nothing fancy, just the screens the
-                support team will ask for.
+                Build the small user-management page that SuperTokens does not
+                ship out of the box. Pipe SuperTokens events into an audit table
+                for the closure criteria.
               </p>
             </div>
             <div className="rec-plan-cell">
               <div className="rec-plan-tag">Trigger</div>
               <div className="rec-plan-title">When Keycloak comes in</div>
               <p className="rec-plan-body">
-                A signed contract that wants SAML, SCIM, or AD federation.
-                Stand Keycloak up alongside and route that tenant through it.
+                The first customer that requires SAML or wants their Active
+                Directory wired in. Stand Keycloak up alongside and broker
+                that tenant through it.
               </p>
             </div>
           </div>
@@ -456,74 +461,115 @@ export default function Home() {
       </section>
 
       <section className="section">
-        <Marker num="04" label="What would change our minds" />
+        <Marker num="04" label="What would change the call" />
         <h2 className="section-head">
           <small>Escape hatches</small>
-          Three things that flip the call.
+          Three signals that swing the recommendation.
         </h2>
         <div className="escape">
           <div className="escape-cell">
             <div className="escape-tag">If / SAML</div>
-            <h3 className="escape-title">A buyer wants SAML before you've hit product-market fit.</h3>
+            <h3 className="escape-title">A building owner wants SAML on day one.</h3>
             <p>
-              Skip Better Auth. Use Keycloak from day one. Once a customer
-              has wired their AD into your IdP, moving them off costs you
-              weeks and a lot of goodwill.
+              Start on Keycloak instead. Once a customer has wired their
+              Active Directory into the portal's identity provider, moving
+              them off costs weeks of work and a lot of goodwill.
             </p>
           </div>
           <div className="escape-cell">
-            <div className="escape-tag">If / Mobile</div>
-            <h3 className="escape-title">The product turns into a mobile app.</h3>
+            <div className="escape-tag">If / Authorization</div>
+            <h3 className="escape-title">Permissions get fine-grained per device.</h3>
             <p>
-              Move to SuperTokens. Stolen refresh tokens are mostly a mobile
-              problem and they're worth detecting properly. Better to do
-              this before the first bug report, not after.
+              If Phase 2 needs rules like "this engineer can change setpoints
+              on boilers but only read chiller telemetry", that is what Ory
+              Keto was built for. RBAC alone starts to strain at that level.
             </p>
           </div>
           <div className="escape-cell">
-            <div className="escape-tag">If / Scale</div>
-            <h3 className="escape-title">Auth gets a full-time owner.</h3>
+            <div className="escape-tag">If / Budget</div>
+            <h3 className="escape-title">The cloud bill has to stay tiny.</h3>
             <p>
-              Once the team is past a dozen engineers and someone owns auth
-              all day, a separate service stops being overhead. Either
-              Keycloak or SuperTokens fits fine.
+              If a second container is too much overhead for the small VM the
+              project budget allows, drop to Better Auth. One process, one
+              database, no second container.
             </p>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <Marker num="05" label="Short version" />
+        <Marker num="05" label="Also evaluated, not prototyped" />
+        <h2 className="section-head">
+          <small>From the wider eval doc</small>
+          Three more options we read but did not build against.
+        </h2>
+        <div className="escape">
+          <div className="escape-cell">
+            <div className="escape-tag">Option / Ory</div>
+            <h3 className="escape-title">Ory Kratos plus Ory Keto.</h3>
+            <p>
+              Strongest separation between authentication (Kratos) and
+              authorization (Keto). The right pick if the long-term
+              architecture turns into a multi-service platform with
+              fine-grained permissions. More operational overhead than
+              SuperTokens. Worth a real prototype if Phase 2 grows.
+            </p>
+          </div>
+          <div className="escape-cell">
+            <div className="escape-tag">Option / Zitadel</div>
+            <h3 className="escape-title">Modern alternative to Keycloak.</h3>
+            <p>
+              Cloud-native identity platform with cleaner developer ergonomics
+              than Keycloak. Less mature, smaller community. A reasonable
+              middle ground if Keycloak feels heavy but enterprise integration
+              still matters.
+            </p>
+          </div>
+          <div className="escape-cell">
+            <div className="escape-tag">Option / Authentik</div>
+            <h3 className="escape-title">Infrastructure-leaning self-host.</h3>
+            <p>
+              Open-source identity provider built around self-hosting and
+              internal tooling. Strong admin UI. Less frontend-developer
+              focused than the others, so it fits less naturally with a
+              custom React portal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <Marker num="06" label="Short version" />
         <h2 className="section-head">
           <small>Same call, fewer words</small>
-          Pick by who you sell to.
+          Pick by what the customer actually needs.
         </h2>
         <div className="guidance">
           <div className="guidance-cell" data-accent="orange">
             <span className="guidance-tag">Keycloak when</span>
-            <h3 className="guidance-head">Your customers are IT teams</h3>
+            <h3 className="guidance-head">Enterprise integration is the contract</h3>
             <p>
-              They want SAML. They want their AD users in your app. They will
-              audit your identity provider. Keycloak does all of it. You pay
-              for it in JVM memory and config time.
+              Customers want SAML. They want their Active Directory users in
+              the portal. They will audit your identity provider. Keycloak
+              does all of it. The cost is the JVM footprint and config time.
             </p>
           </div>
           <div className="guidance-cell" data-accent="ink">
             <span className="guidance-tag">SuperTokens when</span>
-            <h3 className="guidance-head">Sessions are the hard part</h3>
+            <h3 className="guidance-head">Balance of features and operations</h3>
             <p>
-              Long-lived sessions, mobile clients, refresh tokens that need to
-              rotate and refuse to be reused. SuperTokens handles all of that
-              without you writing it. Magic link and MFA are right there too.
+              Custom React UI, RBAC, sessions, MFA, social login, all from
+              one self-hosted service that does not need a dedicated
+              operator. Matches the project's Phase 1 needs.
             </p>
           </div>
           <div className="guidance-cell" data-accent="paper">
             <span className="guidance-tag">Better Auth when</span>
-            <h3 className="guidance-head">You're trying to ship</h3>
+            <h3 className="guidance-head">You want zero extra services</h3>
             <p>
-              Small team, TypeScript, one database. Better Auth takes a moving
-              part out of your architecture and gives you typed calls. Add
-              plugins when you actually need them.
+              The portal is TypeScript first. Better Auth runs inside the
+              NestJS process and stores users in the same Postgres as the
+              building data. Smallest footprint of the three.
             </p>
           </div>
         </div>

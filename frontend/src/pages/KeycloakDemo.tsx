@@ -84,23 +84,24 @@ export default function KeycloakDemo() {
         </div>
         <h1 className="provider-title">
           Keycloak<br />
-          is its own<br />
-          <span style={{ color: 'var(--orange)' }}>auth server</span>.
+          is the<br />
+          <span style={{ color: 'var(--orange)' }}>enterprise</span> option.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--orange)' }}>
           <KeycloakMark size={96} />
         </div>
         <p className="provider-thesis">
-          It runs as a container next to your app. Users sign in on Keycloak's
-          pages and your app gets a signed token back. SAML, OIDC, LDAP,
-          Kerberos. The protocols enterprise IT departments still ask for.
+          A mature identity and access management platform. The natural pick
+          if Noah Controls customers ever require SAML or want their
+          corporate Active Directory wired into the portal. Heavier to run
+          than the other two prototypes, but the only one of the three that
+          speaks SAML out of the box.
         </p>
         <div className="provider-callouts">
-          <strong>Built by Red Hat</strong>
-          <span>Started 2014</span>
+          <strong>Built by Red Hat, 2014</strong>
           <span>Runs on Java (Quarkus)</span>
-          <span>Apache 2.0</span>
-          <span>Needs a container and Postgres</span>
+          <span>Apache 2.0, fully self-hostable</span>
+          <span>Needs its own container and Postgres</span>
         </div>
       </header>
 
@@ -110,28 +111,28 @@ export default function KeycloakDemo() {
           <div data-accent="orange">
             <h4>Strengths</h4>
             <ul>
-              <li>SAML 2.0 identity provider, both ends</li>
-              <li>Pulls users from LDAP and AD</li>
-              <li>Admin UI covers realms, users, clients, roles</li>
-              <li>Real authorization rules, not just roles</li>
+              <li>Built-in SSO, MFA, RBAC, OAuth2 / OIDC / SAML</li>
+              <li>Federates users from LDAP and Active Directory</li>
+              <li>Admin console covers realms, users, clients, roles</li>
+              <li>Mature, battle-tested, large enterprise community</li>
             </ul>
           </div>
           <div>
             <h4>Trade-offs</h4>
             <ul>
-              <li>Java. Cold start is slow</li>
-              <li>Big config surface, easy to set up wrong</li>
-              <li>Default theme looks like 2014. You'll re-theme</li>
-              <li>Realm exports sometimes break across versions</li>
+              <li>Heavyweight compared to SuperTokens or Better Auth</li>
+              <li>Deeply customizing the React UX takes real effort</li>
+              <li>Admin and config surface is large</li>
+              <li>Larger operational footprint, more for one VM to carry</li>
             </ul>
           </div>
           <div data-accent="brick">
-            <h4>Best fit</h4>
+            <h4>Best fit (for the portal)</h4>
             <ul>
-              <li>B2B SaaS where SSO is in the contract</li>
-              <li>Multi-tenant products that need hard user separation</li>
-              <li>Teams already running Java services</li>
-              <li>Internal apps that share one IdP</li>
+              <li>A customer signs and asks for enterprise SSO</li>
+              <li>Active Directory or LDAP integration is required</li>
+              <li>Multiple Noah Controls apps need to share one identity</li>
+              <li>Compliance and security governance are on the table</li>
             </ul>
           </div>
         </div>
@@ -139,12 +140,14 @@ export default function KeycloakDemo() {
         <Marker num="02" label="What makes it different" />
         <section className="standout" data-accent="orange">
           <div>
-            <span className="standout-eyebrow">Federation</span>
-            <h3>Keycloak can be the IdP for the rest of your stack.</h3>
+            <span className="standout-eyebrow">Identity federation</span>
+            <h3>Keycloak can be the identity provider for the rest of the stack.</h3>
             <p style={{ marginTop: 18 }}>
-              It'll act as a SAML identity provider for one customer's AD
-              while brokering Google or GitHub at the same time. Most auth
-              tools sign in end users. Keycloak signs in other services.
+              It can act as a SAML identity provider for one Noah Controls
+              customer's Active Directory and broker Google or GitHub for
+              another, all at the same time. The other two prototypes do not
+              do this. Most auth tools sign in end users. Keycloak signs in
+              other services as well.
             </p>
           </div>
           <div className="standout-figure">

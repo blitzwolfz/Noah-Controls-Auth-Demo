@@ -108,24 +108,24 @@ export default function SuperTokensDemo() {
         </div>
         <h1 className="provider-title">
           SuperTokens<br />
-          does <span style={{ color: 'var(--cobalt)' }}>sessions</span><br />
-          properly.
+          is the <span style={{ color: 'var(--cobalt)' }}>recommendation</span><br />
+          for Phase 1.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--cobalt)' }}>
           <SuperTokensMark size={96} />
         </div>
         <p className="provider-thesis">
-          A small Java server that stores users, plus a Node SDK that does
-          the work. Session cookies rotate on every refresh, and if a stolen
-          one shows up after the real client has moved on, SuperTokens kills
-          the whole session.
+          A developer-focused authentication platform. Self-hosted, open
+          source, no recurring licensing. Built-in RBAC, sessions, and
+          recipes for password, social, and MFA. Custom React UI is the
+          default flow. Matches the eval doc's "best balance" call and lines
+          up with the Phase 1 deliverables.
         </p>
         <div className="provider-callouts">
-          <strong>By the SuperTokens team</strong>
-          <span>Started 2020</span>
-          <span>Node SDK, Java core</span>
-          <span>Apache 2.0</span>
-          <span>Container plus Postgres</span>
+          <strong>By the SuperTokens team, 2020</strong>
+          <span>Node SDK, Java core service</span>
+          <span>Apache 2.0, fully self-hostable</span>
+          <span>One container plus Postgres</span>
         </div>
       </header>
 
@@ -135,28 +135,29 @@ export default function SuperTokensDemo() {
           <div data-accent="orange">
             <h4>Strengths</h4>
             <ul>
-              <li>Rotating refresh tokens with hijack detection, on by default</li>
-              <li>Recipes for password, magic link, social, MFA</li>
-              <li>Backend-first. Any frontend</li>
-              <li>Self-host or use their cloud</li>
+              <li>Strong React and TypeScript developer experience</li>
+              <li>Custom frontend flows are the default, not an exception</li>
+              <li>Built-in RBAC, sessions, MFA, social, magic link</li>
+              <li>Lower infrastructure complexity than Keycloak</li>
+              <li>Self-host the core, no recurring licensing</li>
             </ul>
           </div>
           <div>
             <h4>Trade-offs</h4>
             <ul>
-              <li>No SAML, no LDAP</li>
-              <li>Multi-tenant is there but younger than Keycloak's</li>
-              <li>Cookie path defaults will bite you once. They bit us</li>
-              <li>Smaller community than Keycloak</li>
+              <li>No SAML, no LDAP federation</li>
+              <li>Multi-tenant model is younger than Keycloak's realms</li>
+              <li>Less flexible than Ory for advanced authorization graphs</li>
+              <li>Smaller ecosystem than Keycloak at enterprise scale</li>
             </ul>
           </div>
           <div data-accent="brick">
-            <h4>Best fit</h4>
+            <h4>Best fit (for the portal)</h4>
             <ul>
-              <li>Consumer apps with mobile clients</li>
-              <li>Products with long sessions</li>
-              <li>Teams that want session security off the shelf</li>
-              <li>Passwordless or MFA on the next roadmap</li>
+              <li>Phase 1 needs RBAC, sessions, and a custom React login</li>
+              <li>Two-factor will arrive before the first pilot building</li>
+              <li>Cloud budget keeps the stack on small VMs</li>
+              <li>Developer productivity is a Phase 1 priority</li>
             </ul>
           </div>
         </div>
@@ -164,14 +165,15 @@ export default function SuperTokensDemo() {
         <Marker num="02" label="What makes it different" />
         <section className="standout" data-accent="ink">
           <div>
-            <span className="standout-eyebrow">Stolen-token detection</span>
-            <h3>If a stolen refresh token shows up, the whole session dies.</h3>
+            <span className="standout-eyebrow">Sessions and stolen-token detection</span>
+            <h3>Refresh tokens rotate. Reused ones kill the session.</h3>
             <p style={{ marginTop: 18 }}>
-              Each refresh swaps the token pair and burns the old one. If
-              someone replays a stale refresh token after the real client has
+              Each refresh swaps the token pair and burns the old one. If a
+              stale refresh token gets replayed after the real client has
               moved on, SuperTokens sees the conflict and revokes the entire
-              session. That's the bit you'd otherwise write yourself, and
-              probably get wrong.
+              session. That matters for engineers who stay logged in across
+              long site visits, and for property managers who hold control
+              over real equipment.
             </p>
           </div>
           <div className="standout-figure">

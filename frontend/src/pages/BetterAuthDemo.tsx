@@ -114,24 +114,24 @@ export default function BetterAuthDemo() {
         </div>
         <h1 className="provider-title">
           Better Auth<br />
-          is a <span style={{ color: 'var(--brick)' }}>library</span>,<br />
-          not a server.
+          runs <span style={{ color: 'var(--brick)' }}>inside</span><br />
+          the backend.
         </h1>
         <div className="provider-mark-wrap" style={{ color: 'var(--brick)' }}>
           <BetterAuthMark size={96} />
         </div>
         <p className="provider-thesis">
-          You npm install it into the app you've already got. It writes a few
-          tables into your database and gives you typed functions for sign up,
-          sign in, and sessions. There's no second process to deploy or
-          restart.
+          A TypeScript library, not a server. It installs into the NestJS
+          backend, writes its tables into the same Postgres as the building
+          data, and exposes typed functions for sign up, sign in, and
+          sessions. No second process to deploy. Not in the original eval
+          doc, but worth prototyping because the portal is TypeScript-first.
         </p>
         <div className="provider-callouts">
-          <strong>Started by Bekacru</strong>
-          <span>2024, growing fast</span>
+          <strong>Started by Bekacru, 2024</strong>
           <span>Pure TypeScript</span>
-          <span>MIT</span>
-          <span>An npm install and a migration</span>
+          <span>MIT license</span>
+          <span>npm install plus a migration</span>
         </div>
       </header>
 
@@ -141,28 +141,28 @@ export default function BetterAuthDemo() {
           <div data-accent="orange">
             <h4>Strengths</h4>
             <ul>
-              <li>Lives in your repo, no separate service</li>
+              <li>No second service to deploy or operate</li>
+              <li>User tables sit next to building data in one Postgres</li>
               <li>Server and client are typed end to end</li>
-              <li>SQLite, Postgres, MySQL, libSQL</li>
               <li>Plugins cover orgs, 2FA, passkeys, magic link</li>
             </ul>
           </div>
           <div>
             <h4>Trade-offs</h4>
             <ul>
-              <li>It's the newest of the three. Expect breaking minors</li>
-              <li>Auth runs in your process. The security is on you</li>
-              <li>No admin UI, build your own</li>
-              <li>No SAML, no LDAP</li>
+              <li>Youngest of the three. Expect breaking changes on minors</li>
+              <li>Not in the original eval doc, lighter prior validation</li>
+              <li>No admin UI, no SAML, no LDAP federation</li>
+              <li>Security boundary is in the application repo</li>
             </ul>
           </div>
           <div data-accent="brick">
-            <h4>Best fit</h4>
+            <h4>Best fit (for the portal)</h4>
             <ul>
-              <li>TypeScript teams trying to ship</li>
-              <li>Apps where a separate auth service is overkill</li>
-              <li>Codebases with one schema, one deploy</li>
-              <li>Teams comfortable owning their auth</li>
+              <li>Cloud budget cannot support a second container</li>
+              <li>One Postgres schema is preferred for everything</li>
+              <li>Team is comfortable owning the auth code itself</li>
+              <li>Phase 1 RBAC needs stay simple</li>
             </ul>
           </div>
         </div>
